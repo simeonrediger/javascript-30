@@ -38,29 +38,87 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const inventorsBornIn1500s = inventors.filter(
+      inventor => inventor.year >= 1500 && inventor.year < 1600
+    );
+    console.groupCollapsed('Inventors born in the 1500s');
+    console.table(inventorsBornIn1500s);
+    console.groupEnd();
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const inventorsFirstAndLastNames = inventors.map(
+      inventor => `${inventor.first} ${inventor.last}`
+    );
+    console.groupCollapsed('Inventors\' first and last names');
+    console.table(inventorsFirstAndLastNames);
+    console.groupEnd();
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    const inventorsEarliestToLatestBirthYear = inventors.toSorted(
+      (a, b) => a.year - b.year
+    );
+    console.groupCollapsed('Inventors from earliest to latest birth year');
+    console.table(inventorsEarliestToLatestBirthYear);
+    console.groupEnd();
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const inventorsCumulativeLifetimeInYears = inventors.reduce(
+      (sum, inventor) => sum + inventor.passed - inventor.year,
+      0
+    );
+    console.groupCollapsed('Inventors\' cumulative lifetime in years');
+    console.log(inventorsCumulativeLifetimeInYears);
+    console.groupEnd();
 
     // 5. Sort the inventors by years lived
+    const inventorsShortestToLongestLifetime = inventors.toSorted(
+      (a, b) => (a.passed - a.year) - (b.passed - b.year)
+    );
+    console.groupCollapsed('Inventors sorted by least to most years lived');
+    console.table(inventorsShortestToLongestLifetime);
+    console.groupEnd();
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
-    // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    // Run in console on web page: https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    const container = document.querySelector('.mw-category');
+    const boulevards = Array.from(container.querySelectorAll('a'));
+    const boulevardsWithDe = Array.from(boulevards).filter(boulevard => boulevard.innerHTML.includes('de'));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const getLastName = (person) => person.split(', ')[0];
+    const peopleSortedByLastName = people.toSorted((a, b) => {
+      const aLastName = a.split(', ')[0];
+      const bLastName = b.split(', ')[0];
+
+      if (aLastName < bLastName) {
+        return -1;
+      } else if (aLastName > bLastName) {
+        return 1;
+      }
+    });
+    console.groupCollapsed('People sorted alphabetically by last name');
+    console.table(peopleSortedByLastName);
+    console.groupEnd();
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+
+    // { car: carCount, truck: truckCount, ... }
+    const counts = data.reduce((counts, dataType) => {
+      counts[dataType] ??= 0;
+      counts[dataType]++;
+      return counts;
+    }, {});
+    console.groupCollapsed('Data type counts');
+    console.table(counts);
+    console.groupEnd();
 
   </script>
 </body>
 </html>
+ 
